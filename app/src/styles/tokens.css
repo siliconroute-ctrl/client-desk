@@ -1,0 +1,93 @@
+/* Client Desk design tokens. Generated from the Client Desk design system (tokens.json). Edit there, then regenerate. */
+:root {
+  --bg: #eef2f6;
+  --surface: #ffffff;
+  --surface-hover: #e3e9f0;
+  --line: #c9d3de;
+  --line-strong: #6a7b8f;
+  --ink: #0a1724;
+  --muted: #3c4d61;
+  --accent: #0b54c9;
+  --accent-soft: #e1ecfc;
+  --on-fill: #ffffff;
+  --good: #0a6b36;
+  --good-soft: #ddf2e5;
+  --warning: #8a4a00;
+  --warning-soft: #fcebd3;
+  --critical: #b00f1f;
+  --critical-soft: #fbe1e3;
+  --focus: var(--accent);
+  --chart-bar: var(--accent);
+  --chart-track: var(--line);
+  --shadow-panel: 0 1px 2px #0a17240f, 0 2px 8px #0a17240d;
+  color-scheme: light;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  --target-min: 44px;
+  --control-height: 48px;
+  --rail-width: 248px;
+  --tabbar-height: 72px;
+  --content-max: 1200px;
+  --measure: 68ch;
+  --font-display: "Bricolage Grotesque", "Atkinson Hyperlegible", system-ui, sans-serif;
+  --font-text: "Atkinson Hyperlegible", Verdana, system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a1219;
+    --surface: #121d28;
+    --surface-hover: #1a2836;
+    --line: #26374a;
+    --line-strong: #7489a0;
+    --ink: #f4f8fc;
+    --muted: #b4c2d1;
+    --accent: #7db2ff;
+    --accent-soft: #15304f;
+    --on-fill: #0a1219;
+    --good: #6fe0a0;
+    --good-soft: #123524;
+    --warning: #ffc670;
+    --warning-soft: #3a2a0f;
+    --critical: #ff9aa2;
+    --critical-soft: #43191e;
+    --focus: var(--accent);
+    --chart-bar: var(--accent);
+    --chart-track: var(--line);
+    --shadow-panel: 0 0 0 1px #26374a;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0a1219;
+  --surface: #121d28;
+  --surface-hover: #1a2836;
+  --line: #26374a;
+  --line-strong: #7489a0;
+  --ink: #f4f8fc;
+  --muted: #b4c2d1;
+  --accent: #7db2ff;
+  --accent-soft: #15304f;
+  --on-fill: #0a1219;
+  --good: #6fe0a0;
+  --good-soft: #123524;
+  --warning: #ffc670;
+  --warning-soft: #3a2a0f;
+  --critical: #ff9aa2;
+  --critical-soft: #43191e;
+  --focus: var(--accent);
+  --chart-bar: var(--accent);
+  --chart-track: var(--line);
+  --shadow-panel: 0 0 0 1px #26374a;
+  color-scheme: dark;
+}

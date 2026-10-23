@@ -1,0 +1,100 @@
+{
+  "name": "Client Desk",
+  "version": 1,
+  "color": {
+    "themes": [
+      {"id": "light", "name": "Light"},
+      {"id": "dark", "name": "Dark"}
+    ],
+    "tokens": [
+      {"name": "bg", "value": {"light": "#eef2f6", "dark": "#0a1219"}, "usage": "Page background and the app shell (nav rail, tab bar). From the brief."},
+      {"name": "surface", "value": {"light": "#ffffff", "dark": "#121d28"}, "usage": "Panels, tiles, inputs, dialogs. From the brief."},
+      {"name": "surface-hover", "value": {"light": "#e3e9f0", "dark": "#1a2836"}, "usage": "Hover and pressed fill for rows, nav items and quiet buttons. Derived; ink, muted and every status colour keep at least 5.4:1 on it in both themes."},
+      {"name": "line", "value": {"light": "#c9d3de", "dark": "#26374a"}, "usage": "Decorative dividers between rows and inside panels only. Derived. Too faint for control borders; use line-strong there."},
+      {"name": "line-strong", "value": {"light": "#6a7b8f", "dark": "#7489a0"}, "usage": "Borders of inputs, checkboxes, secondary buttons, chart tracks. Derived; at least 3.5:1 on bg, surface and surface-hover in both themes."},
+      {"name": "ink", "value": {"light": "#0a1724", "dark": "#f4f8fc"}, "usage": "Body text and headings on bg, surface, surface-hover and every -soft tint. 14:1 or better in both themes (AAA). From the brief."},
+      {"name": "muted", "value": {"light": "#3c4d61", "dark": "#b4c2d1"}, "usage": "Secondary text: metadata, hints, client names under task titles. On bg, surface and surface-hover: 7.1:1 or better in both themes (AAA). From the brief."},
+      {"name": "accent", "value": {"light": "#0b54c9", "dark": "#7db2ff"}, "usage": "Primary buttons, links, current nav item, selected chips, chart bars, the focus ring. As text on bg, surface or accent-soft: 5.5:1 or better. From the brief."},
+      {"name": "accent-soft", "value": {"light": "#e1ecfc", "dark": "#15304f"}, "usage": "Tint behind accent text: current nav item, info pills, selected rows. Derived."},
+      {"name": "on-fill", "value": {"light": "#ffffff", "dark": "#0a1219"}, "usage": "Text and icons on any solid accent, good, warning or critical fill (primary button, overdue pill, reminder banner). 6.6:1 or better on all four in both themes. Never use literal white: the dark theme needs dark text on its light fills."},
+      {"name": "good", "value": {"light": "#0a6b36", "dark": "#6fe0a0"}, "usage": "Done, Paid, In credit. Always with a check icon or the word. As text on bg, surface or good-soft: 5.4:1 or better. From the brief."},
+      {"name": "good-soft", "value": {"light": "#ddf2e5", "dark": "#123524"}, "usage": "Tint behind good text in pills. Derived."},
+      {"name": "warning", "value": {"light": "#8a4a00", "dark": "#ffc670"}, "usage": "Due today, Part-paid, Later today. Always with a clock icon or the word. As text on bg, surface or warning-soft: 5.6:1 or better. From the brief."},
+      {"name": "warning-soft", "value": {"light": "#fcebd3", "dark": "#3a2a0f"}, "usage": "Tint behind warning text in pills. Derived."},
+      {"name": "critical", "value": {"light": "#b00f1f", "dark": "#ff9aa2"}, "usage": "Overdue, reminders due, destructive actions, field errors. Always with an alert icon or the word. As text on bg, surface or critical-soft: 5.8:1 or better; as a fill under on-fill: 7.1:1 or better. From the brief."},
+      {"name": "critical-soft", "value": {"light": "#fbe1e3", "dark": "#43191e"}, "usage": "Tint behind critical text: the confirm step of a destructive action, error summaries. Derived."},
+      {"name": "focus", "value": "{accent}", "usage": "Keyboard focus ring colour: 3px solid outline, 2px offset. Alias of accent, so a theme that moves accent moves focus. 5.5:1 or better on every ground."},
+      {"name": "chart-bar", "value": "{accent}", "usage": "Bars in the Next 14 days chart and Open work by client. Alias of accent."},
+      {"name": "chart-track", "value": "{line}", "usage": "Empty track behind a horizontal bar. Alias of line; the value is always printed as a number beside it."}
+    ]
+  },
+  "type": {
+    "fonts": [],
+    "families": {
+      "display": "\"Bricolage Grotesque\", \"Atkinson Hyperlegible\", system-ui, sans-serif",
+      "text": "\"Atkinson Hyperlegible\", Verdana, system-ui, sans-serif"
+    },
+    "groups": [
+      {
+        "name": "Headings",
+        "family": "display",
+        "note": "Bricolage Grotesque, hosted on Google Fonts. Headings and big numbers only.",
+        "styles": [
+          {"name": "title", "fontSize": "32px", "lineHeight": "40px", "fontWeight": 700, "letterSpacing": "-0.01em", "sample": "Dashboard", "usage": "One per screen: the page title in the header."},
+          {"name": "heading", "fontSize": "24px", "lineHeight": "32px", "fontWeight": 700, "sample": "Needs attention", "usage": "Panel titles and client names on a client page."},
+          {"name": "subheading", "fontSize": "20px", "lineHeight": "28px", "fontWeight": 600, "sample": "Reminders due now", "usage": "Group headings inside a panel: Due now, Later today, Upcoming."},
+          {"name": "stat", "fontSize": "40px", "lineHeight": "44px", "fontWeight": 700, "sample": "R 48 250.00", "usage": "The number on a dashboard tile. Tabular figures."}
+        ]
+      },
+      {
+        "name": "Text",
+        "family": "text",
+        "note": "Atkinson Hyperlegible, hosted on Google Fonts. 18px base; nothing in the app is smaller than 16px.",
+        "styles": [
+          {"name": "body", "fontSize": "18px", "lineHeight": "28px", "fontWeight": 400, "sample": "Send the Bayside Dental quote before Friday.", "usage": "All running text, input values, notes."},
+          {"name": "body-strong", "fontSize": "18px", "lineHeight": "28px", "fontWeight": 700, "sample": "Renew Karoo Logistics domain", "usage": "Task and reminder titles, button labels, nav labels on desktop."},
+          {"name": "label", "fontSize": "16px", "lineHeight": "24px", "fontWeight": 700, "sample": "Due date", "usage": "Form labels, pill text, tile labels, tab-bar labels."},
+          {"name": "small", "fontSize": "16px", "lineHeight": "24px", "fontWeight": 400, "sample": "Makhanda Traders · Weekly", "usage": "Metadata, hints, chart axis labels. The floor: never go below this."}
+        ]
+      }
+    ]
+  },
+  "spacing": {
+    "note": "4px base. Lay out with gap, not margins.",
+    "tokens": [
+      {"name": "space-1", "value": "4px", "usage": "Inside pills, icon nudges."},
+      {"name": "space-2", "value": "8px", "usage": "Icon-to-label gap, between chips."},
+      {"name": "space-3", "value": "12px", "usage": "Between stacked rows in a list; label to input."},
+      {"name": "space-4", "value": "16px", "usage": "Panel padding on phones; the minimum side gutter."},
+      {"name": "space-5", "value": "24px", "usage": "Panel padding on desktop; between panels."},
+      {"name": "space-6", "value": "32px", "usage": "Between page sections; header to content."},
+      {"name": "space-7", "value": "48px", "usage": "Top of an empty state."}
+    ]
+  },
+  "radius": {
+    "note": "Soft corners; pills are full.",
+    "tokens": [
+      {"name": "radius-sm", "value": "6px", "usage": "Checkboxes, chips, chart bars."},
+      {"name": "radius-md", "value": "10px", "usage": "Buttons, inputs, nav items, tiles."},
+      {"name": "radius-lg", "value": "16px", "usage": "Panels and the reminder banner."},
+      {"name": "radius-full", "value": "9999px", "usage": "Status pills, switches, count badges."}
+    ]
+  },
+  "shadow": {
+    "note": "One elevation. In dark, separation comes from a 1px border instead.",
+    "tokens": [
+      {"name": "shadow-panel", "value": {"light": "0 1px 2px #0a17240f, 0 2px 8px #0a17240d", "dark": "0 0 0 1px #26374a"}, "usage": "Panels and dashboard tiles."}
+    ]
+  },
+  "size": {
+    "note": "Fixed sizes that carry accessibility rules.",
+    "tokens": [
+      {"name": "target-min", "value": "44px", "usage": "Smallest tap target in either dimension, for every control."},
+      {"name": "control-height", "value": "48px", "usage": "Default height of buttons, inputs, selects and nav items."},
+      {"name": "rail-width", "value": "248px", "usage": "Desktop navigation rail, at 900px viewport width and up."},
+      {"name": "tabbar-height", "value": "72px", "usage": "Phone tab bar, below 900px. Add the bottom safe-area inset."},
+      {"name": "content-max", "value": "1200px", "usage": "Maximum width of the main column."},
+      {"name": "measure", "value": "68ch", "usage": "Maximum line length for notes and long text."}
+    ]
+  }
+}
