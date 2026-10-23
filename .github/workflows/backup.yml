@@ -1,0 +1,70 @@
+name: Nightly backup and keep-alive
+
+# 23:15 UTC is 01:15 in Johannesburg. Also runnable by hand from the Actions tab.
+on:
+  schedule:
+    - cron: '15 23 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    env:
+      HAS_DB: ${{ secrets.SUPABASE_DB_URL != '' }}
+      HAS_DRIVE: ${{ secrets.RCLONE_CONFIG != '' && secrets.BACKUP_PASSPHRASE != '' }}
+      HAS_API: ${{ secrets.SUPABASE_URL != '' && secrets.SUPABASE_PUBLISHABLE_KEY != '' }}
+    steps:
+      - name: Keep the free Supabase project active
+        if: env.HAS_API == 'true'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' "$SUPABASE_URL/auth/v1/health" -H "apikey: $KEY")
+          echo "Supabase auth health: HTTP $code"
+          test "$code" = 200
+
+      - name: Install PostgreSQL 17 client
+        if: env.HAS_DB == 'true'
+        run: |
+          sudo install -d /usr/share/postgresql-common/pgdg
+          sudo curl -fsSo /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc https://www.postgresql.org/media/keys/ACCC4CF8.asc
+          echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list >/dev/null
+          sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client-17
+
+      - name: Dump and encrypt
+        if: env.HAS_DB == 'true' && env.HAS_DRIVE == 'true'
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          name="client-desk-$(TZ=Africa/Johannesburg date +%Y-%m-%d).dump"
+          /usr/lib/postgresql/17/bin/pg_dump "$SUPABASE_DB_URL" --format=custom --no-owner --no-privileges \
+            --schema=public --schema=auth --file="$name"
+          gpg --batch --yes --symmetric --cipher-algo AES256 --passphrase-fd 0 --output "$name.gpg" "$name" <<< "$BACKUP_PASSPHRASE"
+          shred -u "$name"
+          echo "BACKUP_FILE=$name.gpg" >> "$GITHUB_ENV"
+          ls -l "$name.gpg" | awk '{print "Encrypted backup size:", $5, "bytes"}'
+
+      - name: Upload to Google Drive and keep 30 days
+        if: env.HAS_DB == 'true' && env.HAS_DRIVE == 'true'
+        env:
+          RCLONE_CONFIG_CONTENT: ${{ secrets.RCLONE_CONFIG }}
+        run: |
+          set -euo pipefail
+          curl -fsS https://rclone.org/install.sh | sudo bash >/dev/null
+          mkdir -p ~/.config/rclone && printf '%s\n' "$RCLONE_CONFIG_CONTENT" > ~/.config/rclone/rclone.conf
+          rclone copy "$BACKUP_FILE" gdrive:ClientDeskBackups
+          rclone delete gdrive:ClientDeskBackups --min-age 30d --include '*.dump.gpg'
+          rclone lsl gdrive:ClientDeskBackups | tail -3
+          rm -f ~/.config/rclone/rclone.conf
+
+      - name: Report what was skipped
+        if: env.HAS_DB != 'true' || env.HAS_DRIVE != 'true' || env.HAS_API != 'true'
+        run: |
+          echo "Not fully configured yet (see docs/SETUP.md, steps 3 and 4):"
+          echo "  keep-alive: $HAS_API   database: $HAS_DB   Google Drive + passphrase: $HAS_DRIVE"
